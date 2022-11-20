@@ -1,0 +1,69 @@
+#define RCC ((unsigned volatile int)0x40023830)
+#define GpioODR ((unsigned volatile int)0x40020c14)
+#define GpioModr ((unsigned volatile int)0x40020c00)
+#define Gpiodm 1<<3
+#define GpiodmB 1<<30
+#define GpiodmO 1<<26
+#define GpiodmBLO 1<<15
+#define GpiodmBLedoff 0<<15
+#define GpiodmOLO 1<<13
+#define GpiodmOLOF 0<<13
+
+void duygu(){
+	turn_name_on();
+	delayy();
+	turn_name_off();
+	delayy();
+}
+void kesim(){
+	turn_surname_on();
+	delayy();
+	turn_surname_off();
+	delayy();
+}
+void init_leds(){
+	RCC =Gpiodm;
+	GpioModr=GpiodmB;
+	GpioModr |=GpiodmO;
+}
+void turn_name_on(){
+	GpioODR |=GpiodmOLO;
+
+}
+void turn_name_off(){
+	GpioODR &=GpiodmOLOF;
+
+}
+void turn_surname_on(){
+	GpioODR =GpiodmBLO;
+
+}
+void turn_surname_off(){
+	GpioODR =GpiodmBLedoff;
+
+}
+
+void delayy(){
+	int delay0 = 0x000FFFFF;
+	while (delay0--){
+		}
+}
+
+
+int main(){
+	init_leds();
+int i;
+for (i=0;i<5;i++){
+
+	duygu();
+}
+	i = 0;
+	while (i<5){
+		kesim();
+		i++;
+	}
+
+	return 0;
+
+
+}
